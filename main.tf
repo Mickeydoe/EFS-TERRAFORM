@@ -17,7 +17,7 @@ resource "aws_instance" "Server_1" {
   ami           = "ami-00beae93a2d981137"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.my_subnet1.id  
-  user_data = 
+  user_data = file("userdata.sh")  # Read the content of userdata.sh
   vpc_security_group_ids = [aws_security_group.allow_nfs.id]
   
   
