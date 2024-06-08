@@ -1,40 +1,36 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      version = "5.52.0"
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
     }
   }
 }
+
+
 
 provider "aws" {
   region = "us-east-1"
 }
 
-
-
-resource "aws_instance" "Server_1" {
+resource "aws_instance" "Server1" {
   ami           = "ami-00beae93a2d981137"
   instance_type = "t2.micro"
-  subnet_id = aws_subnet.my_subnet1.id  
-  user_data = file("userdata.sh")  # Read the content of userdata.sh
+  availability_zone = "us-east-1a"
+  subnet_id = aws_subnet.my_subnet1.id
+  user_data = file("userdata.sh")
   vpc_security_group_ids = [aws_security_group.allow_nfs.id]
   
-  
-
-  tags = {
-    Name = "Server_1"
-  }
+  tags = {Name = "Server1"}
 }
 
-resource "aws_instance" "Server_2" {
+resource "aws_instance" "Server2" {
   ami           = "ami-00beae93a2d981137"
   instance_type = "t2.micro"
+  availability_zone = "us-east-1b"
   subnet_id = aws_subnet.my_subnet2.id
-  vpc_security_group_ids = [ aws_security_group.allow_nfs.id ]
+  user_data = file("userdata.sh")
+  vpc_security_group_ids = [aws_security_group.allow_nfs.id]
   
-
-  tags = {
-    Name = "Server_2"
-  }
+  tags = {Name = "Server2"}
 }
